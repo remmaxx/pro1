@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>키움히어로즈</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            mobile_menu();
+        });
+
+        function mobile_menu() {
+            /* 변수 선언 */
+            var $menu = null;
+            var $left_gnb = null; // 영역 전체
+            var $depth1_wrap = null;
+            var $depth1 = null;
+            var $depth1_btn = null;
+
+            /* 시작 함수 */
+            function start() {
+                init();
+                init_event();
+            }
+            /* 변수 초기화 함수 */
+            function init() {
+                $menu = $('.m_menu');
+                $left_gnb = $('.left_gnbWrap'); // 영역 전체
+                $depth1_wrap = $('.left_gnb>li');
+                $depth1 = $depth1_wrap.children('ul');
+                $depth1_btn = $depth1_wrap.children('a');
+            }
+            /* 이벤트 함수 */
+            function init_event() {
+
+                /* 모바일 메뉴 버튼 클릭했을때 모바일 메뉴영역 나오게 하기 */
+                $menu.click(function(event) {
+                    event.preventDefault();
+                    $left_gnb.addClass('on');
+                });
+
+                /* x버튼 눌렀을때 모바일 메뉴 닫기 */
+                $('.close').click(function(event) {
+                    event.preventDefault();
+
+                    $left_gnb.removeClass('on');
+
+                    // x버튼 누르면 시간차 약간두고 소메뉴 닫히게 하기
+                    setTimeout(function() {
+                        $depth1_btn.removeClass('on');
+                        $depth1.slideUp();
+                    }, 300)
+                });
+
+                /* depth1의 각메뉴 클릭시 depth2 나오게 하기 */
+                $depth1_btn.click(function(event) {
+                    event.preventDefault();
+                    var $this = $(this);
+                    var $this_ul = $this.siblings('ul');
+
+                    var check = $this.hasClass('on');
+                    if (check) {
+                        $this.removeClass('on');
+                        $this_ul.stop(true, true).slideUp();
+                    } else {
+                        $depth1_btn.removeClass('on');
+                        $depth1.stop().slideUp();
+                        $this.addClass('on');
+                        $this_ul.stop(true, true).slideDown();
+                    }
+                });
+
+                /* 디바이스 크기 변경시 모바일 메뉴영역 숨기기 */
+                $(window).resize(function() {
+                    $left_gnb.removeClass('on');
+                });
+            }
+
+            start(); // 시작 호출
+        }
+
+    </script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="wrap">
+        <!-- 여기부터 상단 -->
+        <header id="header">
+            <div class="top_header">
+                <div class="inner">
+                    <ul class="site">
+                        <li>유튜브</li>
+                        <li>페이스북</li>
+                        <li>
+                            <select>
+                                <option>인스타그램</option>
+                                <option>바로가기</option>
+
+
+                            </select>
+                        </li>
+                        <!-- :after으로 clear:both -->
+                    </ul>
+                    <ul class="util">
+                        <li>로그인</li>
+                        <li>회원가입</li>
+                        <li>Q&A</li>
+                        <li>Shop</li>
+                        <!-- :after으로 clear:both -->
+                    </ul>
+                    <!-- :after으로 clear:both -->
+                </div>
+            </div>
+            <div class="bottom_header">
+                <div class="inner">
+                    <ul class="menu">
+                        <li><a href="sub2.html">HEROES</a>
+                            <ul class="submenu subm">
+                                <li><a href="sub2.html">구단소개</a></li>
+                                <li><a href="sub2.html">구단BI</a></li>
+                                <li><a href="sub2.html">스폰서</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sub2.html">선수단</a>
+                            <ul class="submenu subm">
+                                <li><a href="#">투수</a></li>
+                                <li><a href="sub2.html">내야수</a></li>
+                                <li><a href="sub2.html">외야수</a></li>
+                                <li><a href="sub2.html">군입대선수</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sub2.html">홈구장</a>
+                            <ul class="submenu subm">
+                                <li><a href="#">고척돔구장</a></li>
+                                <li><a href="sub2.html">오시는길</a></li>
+                                <li><a href="sub2.html">부대시설</a></li>
+                                <li><a href="sub2.html">좌석표</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sub2.html">경기정보</a>
+                            <ul class="submenu subm">
+                                <li><a href="sub2.html">경기일정</a></li>
+                                <li><a href="sub2.html">경기결과</a></li>
+                                <li><a href="sub2.html">기록/순위</a></li>
+                            </ul>
+                        </li>
+                        <!-- :after으로 clear:both -->
+                    </ul>
+                    <div class="logo">
+                        <a href="index.html"><img src="img/main_h_03.png" alt="로고"></a>
+                    </div>
+                    <div class="sub_menu">
+                        <ul class="side">
+                            <li><i><img src="img/main_h_09.png" alt="채널안내"></i>FAN</li>
+                            <li><i><img src="img/main_h_06.png" alt="간편요금계산기"></i>티켓예매</li>
+                        </ul>
+                        <div class="search">
+                            <img src="img/ico_search.png" alt="검색">
+                        </div>
+                        <div class="m_menu">
+                            <a href="#"><img src="img/ico_menu.png" alt="메뉴버튼"></a>
+                        </div>
+                        <nav class="left_gnbWrap">
+                            <a href="#" class="close">닫기</a>
+                            <ul class="left_gnb">
+                                <li>
+                                    <a href="#">HEROES</a>
+                                    <ul>
+                                        <li><a href="sub2.html">구단소개</a></li>
+                                        <li><a href="sub2.html">구단BI</a></li>
+                                        <li><a href="sub2.html">스폰서</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">선수단</a>
+                                    <ul>
+                                        <li><a href="sub2.html">투수</a></li>
+                                        <li><a href="sub2.html">내야수</a></li>
+                                        <li><a href="sub2.html">외야수</a></li>
+                                        <li><a href="sub2.html">군입대선수</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">홈구장</a>
+                                    <ul>
+                                        <li><a href="sub2.html">고척돔구장</a></li>
+                                        <li><a href="sub2.html">오시는길</a></li>
+                                        <li><a href="sub2.html">부대시설</a></li>
+                                        <li><a href="sub2.html">좌석표</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">경기정보</a>
+                                    <ul>
+                                        <li><a href="sub2.html">경기일정</a></li>
+                                        <li><a href="sub2.html">경기결과</a></li>
+                                        <li><a href="sub2.html">기록/순위</a></li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- :after으로 clear:both -->
+                    </div>
+                    <!-- :after으로 clear:both -->
+                </div>
+            </div>
+        </header>
+        <!-- 여기까지 상단 -->
+
+
+        <!-- 여기부터 서브1 콘텐츠 -->
+        <main id="sub1-contents">
+            <section class="location">
+                <div class="inner">
+                    <ul>
+                        <li><img src="img/sub1_sub_03.png" alt="홈"></li>
+                        <li>
+                            <select>
+                                <option>&nbsp;&nbsp;일정</option>
+                                <option>&nbsp;&nbsp;특가</option>
+                                <option>&nbsp;&nbsp;혜택</option>
+                                <option>&nbsp;&nbsp;서비스지원</option>
+                            </select>
+                        </li>
+                        <li>
+                            <select>
+                                <option>&nbsp;&nbsp;순위</option>
+                                <option>&nbsp;&nbsp;인터넷</option>
+                                <option>&nbsp;&nbsp;전화</option>
+                                <option>&nbsp;&nbsp;가전</option>
+                                <option>&nbsp;&nbsp;서비스기기</option>
+                            </select>
+                        </li>
+                        <li>
+                            <select>
+                                <option>&nbsp;&nbsp;기록</option>
+                                <option>&nbsp;&nbsp;UHD</option>
+                                <option>&nbsp;&nbsp;스마트</option>
+                                <option>&nbsp;&nbsp;부가서비스</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="titlebodyimage">
+                <h1 class="hidden">서브이미지</h1>
+            </section>
+            <section class="goods_cons">
+                <h1 class="hidden">콘텐츠</h1>
+                <div class="goods_rate">
+                    <h2>군입대 선수</h2>
+                    <p>2020년 09월 기준</p>
+                </div>
+                <h3 class="tit_type">선수 안내</h3>
+
+                <div class="tbl_col">
+                    <table class="goodsTbl">
+
+
+                        <thead>
+                            <tr>
+                                <th scope="col">이름</th>
+                                <th scope="col">소속</th>
+                                <th scope="col">포지션</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>임병욱</td>
+                                <td rowspan="4">상무야구단</td>
+                                <td rowspan="2" class="num">내야수</td>
+                            </tr>
+                            <tr>
+                                <td>이병규</td>
+                            </tr>
+                            <tr>
+                                <td>최규보</td>
+                                <td class="num">외야수</td>
+                            </tr>
+                            <tr>
+                                <td>김재현</td>
+                                <td class="num">포수</td>
+                            </tr>
+                            <tr>
+                                <td>하영민</td>
+                                <td rowspan="4">경찰청야구단</td>
+                                <td rowspan="2" class="num">내야수</td>
+                            </tr>
+                            <tr>
+                                <td>조상우</td>
+                            </tr>
+                            <tr>
+                                <td>송성문</td>
+                                <td class="num">내야수</td>
+                            </tr>
+                            <tr>
+                                <td>예진원</td>
+                                <td class="num">포수</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="con_list">
+                    <li>포지션은 변경될 수 있습니다.</li>
+                    <li>자세한 사항은 각 야구단 홈페이지를 참고하십시오.</li>
+                </ul>
+
+
+
+
+
+
+
+
+
+
+            </section>
+            <section class="goods_addDiscount">
+                <h1 class="hidden">상품 요금 안내</h1>
+                <h3>야구단 살펴보기</h3>
+                <div class="goods_addDiscountspec">
+                    <div class="spce_l">
+                        <i class="i_smartgoldHd"><img src="img/sub1_sss_03.png" alt="스마트HD 골드"></i>
+                        <p class="txt1">상무 야구단</p>
+
+
+                        <p class="btnHD1">홈페이지</p>
+                    </div>
+                    <div class="spce_r">
+                        <i class="i_smartgoldHd"><img src="img/sub1_sss_05.png" alt="스마트HD 실버"></i>
+                        <p class="txt1">경찰청 야구단</p>
+
+                        <p class="btnHD1">홈페이지</p>
+                    </div>
+                    <!-- :after으로 clear:both -->
+                </div>
+                <div class="unwon">응원하러 가기</div>
+            </section>
+            <section class="sub_bottom">
+                <div class="inner">
+                    <ul>
+                        <li>개인</li>
+                        <li>기업</li>
+                        <li>
+                            <select>
+                                <option>
+                                    지역방송
+                                </option>
+                            </select>
+                        </li>
+                        <li>회사소개</li>
+                        <li>미환급금조회</li>
+                        <li>고객지원</li>
+                    </ul>
+                    <div>
+                        <select>
+                            <option>
+                                FAMILY SITE
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- 여기까지 서브1 콘텐츠 -->
+
+        <!-- 여기부터 하단 -->
+        <footer id="footer">
+            <!-- 위쪽하단 -->
+            <div class="top_footer">
+                <div class="inner">
+                    <ul>
+                        <li>개인정보취급방침</li>
+                        <li>이용약관</li>
+                        <li>이메일무단수집거부</li>
+                        <li>Q&A</li>
+                        <li>사이트맵</li>
+                        <li>오시는 길</li>
+                        <!-- :after으로 clear:both -->
+                    </ul>
+                </div>
+            </div>
+            <!-- 아래쪽하단 -->
+            <div class="bottom_footer">
+                <div class="inner">
+                    <div class="f_logo"><img src="img/main_h_03_30.png" alt="하단로고"></div>
+                    <div class="copyright">
+                        <ul>
+
+                            <li><span>주소</span>서울시 구로구 스카이돔구장</li>
+                            <li><span>대표자</span>이장석</li>
+                            <li><span>사업자등록번호</span>112-81-31178</li>
+                            <li><span>개인정보보호책임자</span>허민</li>
+                            <!-- :after으로 clear:both -->
+                        </ul>
+                        <p>Copyright © 2020 KIWOOM HEROES All rights reserved.</p>
+                    </div>
+                    <div class="info">
+                        <ul>
+                            <li>
+                                <span>고객센터</span> 1877-8000
+                            </li>
+                            <li>070-8100-1000<span>(인터넷 무료전화)</span></li>
+                            <!-- :after으로 clear:both -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- 여기까지 하단 -->
+    </div>
+</body>
+
+</html>
